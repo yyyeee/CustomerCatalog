@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using yyyeee.CustomerCatalog.Services;
 using yyyeee.CustomerCatalog.Services.CustomerRead;
+using yyyeee.CustomerCatalog.Services.CustomerWrite;
 using yyyeee.CustomerCatalog.Services.DataLayer;
 
 namespace yyyeee.CustomerCatalog
@@ -27,6 +28,7 @@ namespace yyyeee.CustomerCatalog
             services.AddSingleton(_configuration);
             services.AddTransient<ICustomerProvider, CustomerProvider>();
             services.AddSingleton<LiteDatabaseFactory>();
+            services.AddTransient<ICommandHandler<AddCustomerCommand>, AddCustomerCommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

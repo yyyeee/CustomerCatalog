@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
-using SemanticComparison.Fluent;
 using Xunit;
-using yyyeee.CustomerCatalog.Services;
 using yyyeee.CustomerCatalog.Services.CustomerRead;
 using yyyeee.CustomerCatalog.Services.DataLayer.Models;
 
@@ -17,16 +15,11 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
         public async Task should_return_all_customers()
         {
             // Arrange
-            var now = DateTimeOffset.Parse("2018-03-28 22:11:34");
-            AddCustomerToContext(1, "Test1", 1, now.UtcDateTime);
-            AddCustomerToContext(2, "Test2", 2, now.UtcDateTime);
-            AddCustomerToContext(3, "Test3", 3, now.UtcDateTime);
-
             var expected = new List<CustomerDto>
             {
-                new CustomerDto(1, "Test1", CustomerStatus.Prospective, now),
-                new CustomerDto(2, "Test2", CustomerStatus.Current, now),
-                new CustomerDto(3, "Test3", CustomerStatus.NonActive, now)
+                CreateAndReturnExpectedCustomer(1, CustomerStatus.Prospective),
+                CreateAndReturnExpectedCustomer(2, CustomerStatus.Current),
+                CreateAndReturnExpectedCustomer(3, CustomerStatus.NonActive),
             };
 
             // Act
@@ -37,7 +30,16 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
             actualResult.Should().BeEquivalentTo(expected);
         }
 
-        private void AddCustomerToContext(int id, string name, int status, DateTime now)
+        private CustomerDto CreateAndReturnExpectedCustomer(int statusValue, CustomerStatus expectedStatus)
+        {
+            var id = Guid.NewGuid();
+            var name = $"Test{id}";
+            var date = DateTimeOffset.Parse("2018-03-28 22:11:34");
+            AddCustomerToContext(id, name, statusValue, date.UtcDateTime);
+            return new CustomerDto(id, name, expectedStatus, date);
+        }
+
+        private void AddCustomerToContext(Guid id, string name, int status, DateTime now)
         {
             Context.AddCustomer(new Customer {Id = id, Name = name, Status = status, CreationTime = now});
         }

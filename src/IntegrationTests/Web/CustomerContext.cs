@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using yyyeee.CustomerCatalog.Services.DataLayer;
 using yyyeee.CustomerCatalog.Services.DataLayer.Models;
 
@@ -17,7 +18,7 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web
         {
             using (var database = _liteDatabaseFactory.Create())
             {
-                var customers = database.GetCollection<Customer>("Customers");
+                var customers = database.GetCollection<Customer>(LiteDatabaseCollectionNames.Customers);
                 customers.Insert(customer);
             }
         }
@@ -27,6 +28,15 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web
             using (var database = _liteDatabaseFactory.Create())
             {
                 database.DropCollection(LiteDatabaseCollectionNames.Customers);
+            }
+        }
+
+        public Customer GetCustomer(Guid commandId)
+        {
+            using (var database = _liteDatabaseFactory.Create())
+            {
+                var customers = database.GetCollection<Customer>(LiteDatabaseCollectionNames.Customers);
+                return customers.FindById(commandId);
             }
         }
     }
