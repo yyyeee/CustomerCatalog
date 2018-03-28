@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <CustomerList v-bind:items="items"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import CustomerList from '@/components/CustomerList.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    CustomerList,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  
+  mounted () {
+    this.$store.dispatch("getCustomers");
+    this.items = this.$store.state.customers;
+  }
+
+  private items: string[] = [];
+}
 </script>
