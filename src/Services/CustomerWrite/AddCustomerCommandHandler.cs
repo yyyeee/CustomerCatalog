@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using yyyeee.CustomerCatalog.Services.CustomerRead;
 using yyyeee.CustomerCatalog.Services.DataLayer;
 using yyyeee.CustomerCatalog.Services.DataLayer.Models;
@@ -24,6 +24,14 @@ namespace yyyeee.CustomerCatalog.Services.CustomerWrite
                 {
                     throw new CustomerAlreadyCreatedException();
                 }
+
+                customers.Insert(new Customer
+                {
+                    Id = command.Id,
+                    Name = command.Name,
+                    Status = (int) CustomerStatus.Prospective,
+                    CreationTime = DateTimeOffset.Now.UtcDateTime
+                });
             }
         }
     }

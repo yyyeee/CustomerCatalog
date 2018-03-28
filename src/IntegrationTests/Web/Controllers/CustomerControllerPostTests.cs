@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -34,7 +35,7 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
             // Assert
             actual.StatusCode.Should().Be(HttpStatusCode.Created);
             var actualCustomer = Context.GetCustomer(command.Id);
-            actualCustomer.Should().BeEquivalentTo(expected);
+            actualCustomer.Should().BeEquivalentTo(expected, opts => opts.Excluding(c => c.CreationTime));
         }
 
         [Fact]
@@ -59,7 +60,11 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
         private async Task<HttpResponseMessage> InvokeAddCustomerMethod(AddCustomerCommand command)
         {
             var result =
-                await Client.PostAsync("/api/customer", new StringContent(JsonConvert.SerializeObject(command)));
+                await Client.PostAsync("/api/customer", 
+                    new StringContent(
+                        JsonConvert.SerializeObject(command),
+                        Encoding.UTF8,
+                        "application/json"));
             return result;
         }
     }

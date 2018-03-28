@@ -34,7 +34,7 @@ namespace yyyeee.CustomerCatalog.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(AddCustomerCommand command)
+        public IActionResult Post([FromBody] AddCustomerCommand command)
         {
             try
             {
