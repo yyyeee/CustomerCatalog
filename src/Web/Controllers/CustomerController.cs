@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using yyyeee.CustomerCatalog.Services;
 
 namespace yyyeee.CustomerCatalog.Controllers
 {
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ICustomerProvider _customerProvider;
+
+        public CustomerController(ICustomerProvider customerProvider)
         {
-            return new string[] { "value1", "value2" };
+            _customerProvider = customerProvider;
+        }
+
+        [HttpGet]
+        public IEnumerable<CustomerDto> Get()
+        {
+            return _customerProvider.GetAll();
         }
         
         [HttpGet("{id}")]

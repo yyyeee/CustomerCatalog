@@ -8,6 +8,18 @@
     <RootNamespace>yyyeee.CustomerCatalog.IntegrationTests</RootNamespace>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0-preview1-final" />

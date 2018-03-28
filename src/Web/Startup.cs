@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using yyyeee.CustomerCatalog.Services;
 
 namespace yyyeee.CustomerCatalog
 {
@@ -21,17 +22,8 @@ namespace yyyeee.CustomerCatalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
-            if (_currentEnvironment.IsEnvironment("Testing"))
-            {
-//                services.AddDbContext<ApplicationDbContext>(options =>
-//                    options.UseInMemoryDatabase("TestingDB"));
-            }
-            else
-            {
-//                services.AddDbContext<ApplicationDbContext>(options =>
-//                    options.UseSqlServer(_configuration.GetConnectionString("CustomerDatabase")));
-            }
+            services.AddSingleton(_configuration);
+            services.AddTransient<ICustomerProvider, CustomerProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
