@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 
-namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
+namespace yyyeee.CustomerCatalog.IntegrationTests.Web
 {
-    public class BaseIntegrationTest : IDisposable
+    public class BaseWebIntegrationTest : IDisposable
     {
         protected readonly HttpClient Client;
+        protected readonly CustomerContext Context;
         private readonly TestServer _server;
 
-        protected BaseIntegrationTest()
+        protected BaseWebIntegrationTest()
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -22,12 +23,12 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
                     .UseConfiguration(config)
                     .UseStartup<Startup>());
             Client = _server.CreateClient();
-
-            //            _context = server.Host.Services.GetService(typeof(ApplicationDbContext)) as ApplicationDbContext;
+            Context = new CustomerContext(config);
         }
         
         public void Dispose()
         {
+            Context.Cleanup();
             Client.Dispose();
             _server.Dispose();
         }

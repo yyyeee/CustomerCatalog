@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using yyyeee.CustomerCatalog.Services;
+using yyyeee.CustomerCatalog.Services.CustomerRead;
+using yyyeee.CustomerCatalog.Services.DataLayer;
 
 namespace yyyeee.CustomerCatalog
 {
@@ -24,6 +26,7 @@ namespace yyyeee.CustomerCatalog
             services.AddMvc();
             services.AddSingleton(_configuration);
             services.AddTransient<ICustomerProvider, CustomerProvider>();
+            services.AddSingleton<LiteDatabaseFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
