@@ -1,7 +1,7 @@
 ﻿Feature: Customer details
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+	In order to have customer updated
+	As a user
+	I want to be able to edit customer
 
 @mytag
 Scenario: Add two numbers
