@@ -22,6 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="CustomerDetails.feature.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>CustomerDetails.feature</DependentUpon>
+      </Compile>
       <Compile Update="CustomerList.feature.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
@@ -30,6 +35,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Update="CustomerDetails.feature">
+        <Generator>SpecFlowSingleFileGenerator</Generator>
+        <LastGenOutput>CustomerDetails.feature.cs</LastGenOutput>
+      </None>
       <None Update="CustomerList.feature">
         <Generator>SpecFlowSingleFileGenerator</Generator>
         <LastGenOutput>CustomerList.feature.cs</LastGenOutput>
