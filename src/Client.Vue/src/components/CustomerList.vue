@@ -3,8 +3,7 @@
     <vue-good-table
       title="Customers"
       :columns="columns"
-      :rows="items"
-      :paginate="true"/>
+      :rows="items"/>
   </div>
 </template>
 
