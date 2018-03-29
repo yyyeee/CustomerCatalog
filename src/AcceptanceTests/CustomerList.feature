@@ -7,16 +7,15 @@
 Scenario: See list of customers
 	Given The following customers exist
 | Name           | Status     | CreationTime |
-| Customer1      | Prospective | 27.03.2018 11:00       |
-| Customer2		 | Current    | 21.02.2018 12:00    |
-| Customer3		 | NonActive     | 17.03.2018 11:22   |
-	Given a webpage
+| Customer1      | 1 | 2018-03-27 11:00       |
+| Customer2		 | 2    | 2018-02-21 12:00    |
+| Customer3		 | 3     | 2018-03-17 11:22   |
 	When I open the list of customers
 	Then the following customers appear in the list
 | Name           | Status     | CreationTime |
-| Customer1      | Prospective | 27.03.2018 11:00       |
-| Customer2		 | Current    | 21.02.2018 12:00    |
-| Customer3		 | Non-active     | 17.03.2018 11:22   |
+| Customer1      | Prospective | Mar 27th 18       |
+| Customer3		 | Non-active     | Mar 17th 18   |
+| Customer2		 | Current    | Feb 21st 18    |
 
 	
 @customerList

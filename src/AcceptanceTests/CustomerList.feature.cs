@@ -89,21 +89,19 @@ this.ScenarioSetup(scenarioInfo);
                         "CreationTime"});
             table1.AddRow(new string[] {
                         "Customer1",
-                        "Prospective",
-                        "27.03.2018 11:00"});
+                        "1",
+                        "2018-03-27 11:00"});
             table1.AddRow(new string[] {
                         "Customer2",
-                        "Current",
-                        "21.02.2018 12:00"});
+                        "2",
+                        "2018-02-21 12:00"});
             table1.AddRow(new string[] {
                         "Customer3",
-                        "NonActive",
-                        "17.03.2018 11:22"});
+                        "3",
+                        "2018-03-17 11:22"});
 #line 8
  testRunner.Given("The following customers exist", ((string)(null)), table1, "Given ");
 #line 13
- testRunner.Given("a webpage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
  testRunner.When("I open the list of customers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -113,16 +111,16 @@ this.ScenarioSetup(scenarioInfo);
             table2.AddRow(new string[] {
                         "Customer1",
                         "Prospective",
-                        "27.03.2018 11:00"});
-            table2.AddRow(new string[] {
-                        "Customer2",
-                        "Current",
-                        "21.02.2018 12:00"});
+                        "Mar 27th 18"});
             table2.AddRow(new string[] {
                         "Customer3",
                         "Non-active",
-                        "17.03.2018 11:22"});
-#line 15
+                        "Mar 17th 18"});
+            table2.AddRow(new string[] {
+                        "Customer2",
+                        "Current",
+                        "Feb 21st 18"});
+#line 14
  testRunner.Then("the following customers appear in the list", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -136,7 +134,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Filter list of customers by name", new string[] {
                         "customerList"});
-#line 23
+#line 22
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
@@ -150,7 +148,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sort by name list of customers", new string[] {
                         "customerList"});
-#line 26
+#line 25
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
@@ -164,7 +162,7 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sort filtered list of customers", new string[] {
                         "customerList"});
-#line 29
+#line 28
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();

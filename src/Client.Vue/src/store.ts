@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { CustomerClient, CustomerDto } from '@/services'
+import { createClient } from 'http';
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ export default new Vuex.Store({
   },
   actions: {
     getCustomers ({ commit }) {
-      var customerClient = new CustomerClient();
+      // TODO introduce Config
+      var customerClient = new CustomerClient("http://localhost:2321");
       customerClient.getAll()
         .then(data => {
           commit('SET_CUSTOMERS', data)
@@ -30,8 +32,10 @@ export default new Vuex.Store({
     },
 
     addCustomer ({ commit }, data) {
-      var customerClient = new CustomerClient();
+      // TODO introduce Config
+      var customerClient = new CustomerClient("http://localhost:2321");
       customerClient.post(data)
+      // TODO load data
         .then(response => commit('ADD_CUSTOMER', data))
         .catch(e => {
           if (e.status === 409) {
@@ -40,6 +44,6 @@ export default new Vuex.Store({
             alert('An error occured during retrieving customer, please try again.')
           }
         });
-    }
+    },
   },
 });

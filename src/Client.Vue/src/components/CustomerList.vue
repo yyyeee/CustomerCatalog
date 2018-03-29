@@ -1,8 +1,9 @@
 <template>
-  <div class="hello">
+  <div class="customer-table">
     <vue-good-table
       title="Customers"
       :columns="columns"
+      :defaultSortBy="{field: 'creationTime', type: 'desc'}"
       :rows="items"/>
   </div>
 </template>
@@ -36,6 +37,7 @@ export default class HelloWorld extends Vue {
     {
       label: 'Status',
       field: 'status',
+      type: 'number',
       filterable: true,
       filterDropdown: true,
       formatFn: function(value: number) {
