@@ -38,7 +38,19 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests
             Driver.Navigate().Refresh();
             Assert.NotNull(CustomerListPage);
         }
-        
+
+        [When(@"I filter the list by name with value '(.*)'")]
+        public void WhenIFilterTheListByNameWithValue(string filterValue)
+        {
+            CustomerListPage.FillNameFilter(filterValue);
+        }
+
+        [When(@"I sort by name")]
+        public void WhenISortByName()
+        {
+            CustomerListPage.ClickNameColumnHeader();
+        }
+
         [Then(@"the following customers appear in the list")]
         public void ThenTheFollowingCustomersAppearInTheList(Table table)
         {

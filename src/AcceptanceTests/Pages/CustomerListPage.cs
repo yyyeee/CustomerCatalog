@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
@@ -9,9 +10,12 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests.Pages
     internal class CustomerListPage
     {
         private readonly IWebDriver _driver;
+        
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Filter Name']")]
+        private IWebElement NameFilter { get; set; }
 
-        [FindsBy(How = How.ClassName, Using = "customer-table")]
-        public IWebElement Table { get; set; }
+        [FindsBy(How = How.XPath, Using = "//th[contains(@class,'sorting')]/span[text() = 'Name']")]
+        private IWebElement NameColumnHeader { get; set; }
 
         public CustomerListPage(IWebDriver driver)
         {
@@ -35,6 +39,18 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests.Pages
             }
 
             return values;
+        }
+
+        public void FillNameFilter(string value)
+        {
+            NameFilter.SendKeys(value);
+            Thread.Sleep(1000);
+        }
+
+        public void ClickNameColumnHeader()
+        {
+            NameColumnHeader.Click();
+            Thread.Sleep(1000);
         }
     }
 

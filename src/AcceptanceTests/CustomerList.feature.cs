@@ -137,6 +137,40 @@ this.ScenarioSetup(scenarioInfo);
 #line 22
 this.ScenarioSetup(scenarioInfo);
 #line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table3.AddRow(new string[] {
+                        "Customer1",
+                        "1",
+                        "2018-03-27 11:00"});
+            table3.AddRow(new string[] {
+                        "Customer2",
+                        "2",
+                        "2018-02-21 12:00"});
+            table3.AddRow(new string[] {
+                        "Customer3",
+                        "3",
+                        "2018-03-17 11:22"});
+#line 23
+ testRunner.Given("The following customers exist", ((string)(null)), table3, "Given ");
+#line 28
+ testRunner.When("I open the list of customers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 29
+ testRunner.When("I filter the list by name with value \'Customer1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table4.AddRow(new string[] {
+                        "Customer1",
+                        "Prospective",
+                        "Mar 27th 18"});
+#line 30
+ testRunner.Then("the following customers appear in the list", ((string)(null)), table4, "Then ");
+#line hidden
             this.ScenarioCleanup();
         }
         
@@ -148,8 +182,50 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sort by name list of customers", new string[] {
                         "customerList"});
-#line 25
+#line 35
 this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table5.AddRow(new string[] {
+                        "Customer1",
+                        "1",
+                        "2018-03-27 11:00"});
+            table5.AddRow(new string[] {
+                        "Customer2",
+                        "2",
+                        "2018-02-21 12:00"});
+            table5.AddRow(new string[] {
+                        "Customer3",
+                        "3",
+                        "2018-03-17 11:22"});
+#line 36
+ testRunner.Given("The following customers exist", ((string)(null)), table5, "Given ");
+#line 41
+ testRunner.When("I open the list of customers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 42
+ testRunner.When("I sort by name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table6.AddRow(new string[] {
+                        "Customer1",
+                        "Prospective",
+                        "Mar 27th 18"});
+            table6.AddRow(new string[] {
+                        "Customer2",
+                        "Current",
+                        "Feb 21st 18"});
+            table6.AddRow(new string[] {
+                        "Customer3",
+                        "Non-active",
+                        "Mar 17th 18"});
+#line 43
+ testRunner.Then("the following customers appear in the list", ((string)(null)), table6, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -162,8 +238,48 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sort filtered list of customers", new string[] {
                         "customerList"});
-#line 28
+#line 50
 this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table7.AddRow(new string[] {
+                        "Customer2",
+                        "2",
+                        "2018-02-21 12:00"});
+            table7.AddRow(new string[] {
+                        "Customer1",
+                        "1",
+                        "2018-03-27 11:00"});
+            table7.AddRow(new string[] {
+                        "Test",
+                        "3",
+                        "2018-03-17 11:22"});
+#line 51
+ testRunner.Given("The following customers exist", ((string)(null)), table7, "Given ");
+#line 56
+ testRunner.When("I open the list of customers", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 57
+ testRunner.When("I sort by name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 58
+ testRunner.When("I filter the list by name with value \'Customer\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table8.AddRow(new string[] {
+                        "Customer1",
+                        "Prospective",
+                        "Mar 27th 18"});
+            table8.AddRow(new string[] {
+                        "Customer2",
+                        "Current",
+                        "Feb 21st 18"});
+#line 59
+ testRunner.Then("the following customers appear in the list", ((string)(null)), table8, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
