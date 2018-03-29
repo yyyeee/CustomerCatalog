@@ -27,6 +27,12 @@ namespace yyyeee.CustomerCatalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddMvc();
             services.AddSingleton(_configuration);
             services.AddTransient<ICustomerProvider, CustomerProvider>();
@@ -48,6 +54,8 @@ namespace yyyeee.CustomerCatalog
             {
                 settings.GeneratorSettings.DefaultPropertyNameHandling = PropertyNameHandling.CamelCase;
             });
+
+            app.UseCors("AllowAll");
 
             app.UseMvc();
         }

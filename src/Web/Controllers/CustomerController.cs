@@ -34,6 +34,7 @@ namespace yyyeee.CustomerCatalog.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201)]
         public IActionResult Post([FromBody] AddCustomerCommand command)
         {
             try

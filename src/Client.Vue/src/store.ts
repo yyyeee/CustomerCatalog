@@ -1,25 +1,45 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { CustomerClient, CustomerDto } from '@/services'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    customers: new Array<string>()
+    customers: new Array<CustomerDto>()
   },
   mutations: {
-    SET_CUSTOMERS (state, payload) {
-      state.customers = payload
+    SET_CUSTOMERS (state, payload: CustomerDto[]) {
+      payload.forEach(element => {
+        state.customers.push(element)        
+      });
+    },
+    ADD_CUSTOMER (state, payload) {
+      state.customers.unshift(payload)
     }
-
   },
   actions: {
     getCustomers ({ commit }) {
-      fetch("http://172.23.1.72/api/customer",  {mode: 'no-cors'})
-        .then(stream => stream.text())
-        .then(data => console.log(data));
-      let customers = ["lolek", "bolek"]
-      commit('SET_CUSTOMERS', customers)
+      var customerClient = new CustomerClient();
+      customerClient.getAll()
+        .then(data => {
+          commit('SET_CUSTOMERS', data)
+        })
+        .catch(e => alert('An error occured during retrieving customer, please try again.'));
+      
+    },
+
+    addCustomer ({ commit }, data) {
+      var customerClient = new CustomerClient();
+      customerClient.post(data)
+        .then(response => commit('ADD_CUSTOMER', data))
+        .catch(e => {
+          if (e.status === 409) {
+            alert('Customer already exists!')
+          } else {
+            alert('An error occured during retrieving customer, please try again.')
+          }
+        });
     }
   },
 });
