@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace yyyeee.CustomerCatalog.IntegrationTests.Web
 {
@@ -31,6 +34,18 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web
             Context.Cleanup();
             Client.Dispose();
             _server.Dispose();
+        }
+
+
+        protected async Task<HttpResponseMessage> InvokePost(string address, object payload)
+        {
+            var result =
+                await Client.PostAsync(address,
+                    new StringContent(
+                        JsonConvert.SerializeObject(payload),
+                        Encoding.UTF8,
+                        "application/json"));
+            return result;
         }
     }
 }

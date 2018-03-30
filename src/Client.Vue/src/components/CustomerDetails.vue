@@ -13,6 +13,7 @@
             </option>
         </select>
     </div>
+    <button @click="addNote" id="addNoteButton">Add note</button>
     <button @click="save" id="saveButton">Save changes</button>
   </div>
 </div>
@@ -42,6 +43,13 @@ export default class CustomerDetails extends Vue {
     public save() {
         const command = { id: this.customer.id  };
         this.$store.dispatch('saveCustomer', command);
+    }
+
+    public addNote() {
+        const note = prompt('Please add note for customer:');
+        if (note !== null) {
+            console.log(note);
+        }
     }
 }
 </script>

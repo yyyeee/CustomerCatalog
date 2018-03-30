@@ -26,5 +26,16 @@ namespace yyyeee.CustomerCatalog.Services.CustomerRead
                 return customerDtos;
             }
         }
+
+        public ICollection<NoteDto> GetNotesForCustomer(Guid id)
+        {
+            using (var database = _liteDatabaseFactory.Create())
+            {
+                var customers = database.GetCollection<Customer>(LiteDatabaseCollectionNames.Customers);
+                
+                var customer = customers.FindById(id);
+                return customer.Notes.Select(n => new NoteDto(n.Id, n.Text)).ToList();
+            }
+        }
     }
 }
