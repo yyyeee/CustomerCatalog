@@ -10,38 +10,37 @@ export default new Vuex.Store({
     customers: new Array<CustomerDto>()
   },
   mutations: {
-    SET_CUSTOMERS (state, payload: CustomerDto[]) {
-      payload.forEach(element => {
-        state.customers.push(element)        
+    SET_CUSTOMERS(state, payload: CustomerDto[]) {
+      payload.forEach((element) => {
+        state.customers.push(element);
       });
     },
-    ADD_CUSTOMER (state, payload) {
-      state.customers.unshift(payload)
+    ADD_CUSTOMER(state, payload) {
+      state.customers.unshift(payload);
     }
   },
   actions: {
-    getCustomers ({ commit }) {
+    getCustomers({ commit }) {
       // TODO introduce Config
-      var customerClient = new CustomerClient("http://localhost:2321");
+      const customerClient = new CustomerClient('http://localhost:2321');
       customerClient.getAll()
-        .then(data => {
-          commit('SET_CUSTOMERS', data)
+        .then((data) => {
+          commit('SET_CUSTOMERS', data);
         })
-        .catch(e => alert('An error occured during retrieving customer, please try again.'));
-      
+        .catch((e) => alert('An error occured during retrieving customer, please try again.'));
     },
 
-    addCustomer ({ commit }, data) {
+    addCustomer({ commit }, data) {
       // TODO introduce Config
-      var customerClient = new CustomerClient("http://localhost:2321");
+      const customerClient = new CustomerClient('http://localhost:2321');
       customerClient.post(data)
       // TODO load data
-        .then(response => commit('ADD_CUSTOMER', data))
-        .catch(e => {
+        .then((response) => commit('ADD_CUSTOMER', data))
+        .catch((e) => {
           if (e.status === 409) {
-            alert('Customer already exists!')
+            alert('Customer already exists!');
           } else {
-            alert('An error occured during retrieving customer, please try again.')
+            alert('An error occured during retrieving customer, please try again.');
           }
         });
     },

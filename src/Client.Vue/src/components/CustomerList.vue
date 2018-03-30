@@ -4,7 +4,13 @@
       title="Customers"
       :columns="columns"
       :defaultSortBy="{field: 'creationTime', type: 'desc'}"
-      :rows="items"/>
+      :rows="items">
+      <template slot="table-row-after" slot-scope="props">
+        <td>
+          <router-link :to="{ name: 'customerDetails', params: {id: props.row.id } }">Details</router-link>
+        </td>
+      </template>
+    </vue-good-table>
   </div>
 </template>
 
@@ -15,16 +21,16 @@ import { CustomerDto } from '@/services';
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private items: CustomerDto[];
-  
+
   private columns = [
     {
       label: 'Id',
-      field: 'id'
+      field: 'id',
     },
     {
       label: 'Name',
       field: 'name',
-      filterable: true
+      filterable: true,
     },
     {
       label: 'Created On',
@@ -32,7 +38,7 @@ export default class HelloWorld extends Vue {
       type: 'date',
       inputFormat: 'YYYY-MM-DD',
       outputFormat: 'MMM Do YY',
-      sortable: true
+      sortable: true,
     },
     {
       label: 'Status',
@@ -40,7 +46,7 @@ export default class HelloWorld extends Vue {
       type: 'number',
       filterable: true,
       filterDropdown: true,
-      formatFn: function(value: number) {
+      formatFn(value: number) {
         switch (value) {
           case 1:
             return 'Prospective';
@@ -52,11 +58,14 @@ export default class HelloWorld extends Vue {
             return 'Unknown';
         }
       },
-      filterOptions: [  
-            { value: '1', text: 'Prospective' },  
-            { value: '2', text: 'Current' },  
-            { value: '3', text: 'Non-active' }  
+      filterOptions: [
+            { value: '1', text: 'Prospective' },
+            { value: '2', text: 'Current' },
+            { value: '3', text: 'Non-active' }
           ],
+    },
+    {
+      label: 'Details',
     }
   ];
 }
