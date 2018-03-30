@@ -20,3 +20,11 @@ Scenario: Edit customer details
 @customerDetails
 Scenario: See customer details
 
+@customerDetails
+Scenario: See notes for customer
+
+@customerDetails
+Scenario: Add note for customer
+
+@customerDetails
+Scenario: Edit note for customer

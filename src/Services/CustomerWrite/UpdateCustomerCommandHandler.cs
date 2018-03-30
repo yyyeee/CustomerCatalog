@@ -1,7 +1,4 @@
-﻿using System;
-using yyyeee.CustomerCatalog.Services.CustomerRead;
-using yyyeee.CustomerCatalog.Services.DataLayer;
-using yyyeee.CustomerCatalog.Services.DataLayer.Models;
+﻿using yyyeee.CustomerCatalog.Services.DataLayer;
 
 namespace yyyeee.CustomerCatalog.Services.CustomerWrite
 {

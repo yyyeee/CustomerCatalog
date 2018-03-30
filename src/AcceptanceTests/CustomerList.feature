@@ -1,7 +1,7 @@
 ﻿Feature: Customer list
 	In order to contact customers
 	As a user
-	I want to be able to see customers on list
+	I want to be able to manage customers on list
 
 @customerList
 Scenario: See list of customers
@@ -60,3 +60,6 @@ Scenario: Sort filtered list of customers
 | Name           | Status     | CreationTime |
 | Customer1      | Prospective | Mar 27th 18       |
 | Customer2		 | Current    | Feb 21st 18    |
+
+@customerList
+Scenario: Add customer to list
