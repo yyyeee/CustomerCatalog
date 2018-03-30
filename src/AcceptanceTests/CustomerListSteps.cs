@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
 using Xunit;
 using yyyeee.CustomerCatalog.AcceptanceTests.Pages;
@@ -7,8 +9,10 @@ using yyyeee.CustomerCatalog.AcceptanceTests.Pages;
 namespace yyyeee.CustomerCatalog.AcceptanceTests
 {
     [Binding]
-    public class CustomerListSteps : BaseAcceptanceTest
+    public class CustomerListSteps
     {
+        private static ChromeDriver Driver => ScenarioContext.Current.Get<ChromeDriver>("Driver");
+        private static CustomerContext Context => ScenarioContext.Current.Get<CustomerContext>("Context");
         private CustomerListPage _customerListPage;
         private CustomerListPage CustomerListPage
         {
@@ -24,12 +28,13 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests
         {
             var customers = table.Rows.Select(row => new Customer
             {
-                Id = Guid.NewGuid(),
+                Id = row.ContainsKey("Id") ? Guid.Parse(row["Id"]) : Guid.NewGuid(),
                 Name = row["Name"],
                 Status = int.Parse(row["Status"]),
                 CreationTime = DateTime.Parse(row["CreationTime"])
             });
             Context.AddCustomers(customers);
+            Thread.Sleep(1000);
         }
         
         [When(@"I open the list of customers")]

@@ -72,24 +72,64 @@ namespace SpecFlow.GeneratedTests
             this.ScenarioTearDown();
         }
         
-        [Xunit.FactAttribute(DisplayName="Add two numbers")]
+        [Xunit.FactAttribute(DisplayName="Edit customer details")]
         [Xunit.TraitAttribute("FeatureTitle", "Customer details")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
-        [Xunit.TraitAttribute("Category", "mytag")]
-        public virtual void AddTwoNumbers()
+        [Xunit.TraitAttribute("Description", "Edit customer details")]
+        [Xunit.TraitAttribute("Category", "customerDetails")]
+        public virtual void EditCustomerDetails()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
-                        "mytag"});
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edit customer details", new string[] {
+                        "customerDetails"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime",
+                        "Id"});
+            table1.AddRow(new string[] {
+                        "Customer1",
+                        "1",
+                        "2018-03-27 11:00",
+                        "b14bf7f2-c66d-4927-a322-42eb4f5b40e1"});
 #line 8
- testRunner.Given("I have entered 50 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 9
- testRunner.And("I have entered 70 into the calculator", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
- testRunner.When("I press add", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("The following customers exist", ((string)(null)), table1, "Given ");
 #line 11
- testRunner.Then("the result should be 120 on the screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("I open customer \'b14bf7f2-c66d-4927-a322-42eb4f5b40e1\' view", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.When("I change name to \'New name\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 13
+ testRunner.When("I change status to \'Current\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
+ testRunner.When("I click save", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
+ testRunner.When("I open customers list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Status",
+                        "CreationTime"});
+            table2.AddRow(new string[] {
+                        "New name",
+                        "Prospective",
+                        "Mar 27th 18"});
+#line 16
+ testRunner.Then("the following customers appear in the list", ((string)(null)), table2, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute(DisplayName="See customer details")]
+        [Xunit.TraitAttribute("FeatureTitle", "Customer details")]
+        [Xunit.TraitAttribute("Description", "See customer details")]
+        [Xunit.TraitAttribute("Category", "customerDetails")]
+        public virtual void SeeCustomerDetails()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("See customer details", new string[] {
+                        "customerDetails"});
+#line 21
+this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }

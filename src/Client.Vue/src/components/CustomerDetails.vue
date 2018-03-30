@@ -3,17 +3,17 @@
   <div class="customer-details" v-if="customer">
     <div>
         <label>Customer name</label>
-        <input v-model="customer.name" placeholder="Customer name">
+        <input id="customerNameInput" v-model="customer.name" placeholder="Customer name">
     </div>
     <div>
         <label>Status</label>
-        <select v-model="customer.status">
+        <select id="customerStatusSelect" v-model="customer.status">
             <option v-for="option in statuses" v-bind:value="option.value">
                 {{ option.text }}
             </option>
         </select>
     </div>
-    <button @click="save">Save changes</button>
+    <button @click="save" id="saveButton">Save changes</button>
   </div>
 </div>
 </template>

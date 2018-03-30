@@ -3,9 +3,20 @@
 	As a user
 	I want to be able to edit customer
 
-@mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+@customerDetails
+Scenario: Edit customer details
+	Given The following customers exist
+| Name      | Status | CreationTime     | Id                                   |
+| Customer1 | 1      | 2018-03-27 11:00 | b14bf7f2-c66d-4927-a322-42eb4f5b40e1 |
+	When I open customer 'b14bf7f2-c66d-4927-a322-42eb4f5b40e1' view 
+	When I change name to 'New name'
+	When I change status to 'Current'
+	When I click save
+	When I open customers list
+	Then the following customers appear in the list
+| Name           | Status     | CreationTime |
+| New name      | Prospective | Mar 27th 18       |
+	
+@customerDetails
+Scenario: See customer details
+
