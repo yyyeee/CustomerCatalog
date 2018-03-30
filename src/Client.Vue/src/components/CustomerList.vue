@@ -61,12 +61,12 @@ export default class CustomerList extends Vue {
       filterOptions: [
             { value: '1', text: 'Prospective' },
             { value: '2', text: 'Current' },
-            { value: '3', text: 'Non-active' }
+            { value: '3', text: 'Non-active' },
           ],
     },
     {
       label: 'Details',
-    }
+    },
   ];
 }
 </script>

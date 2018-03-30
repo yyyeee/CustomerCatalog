@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { CustomerClient, CustomerDto, AddCustomerCommand, UpdateCustomerCommand, AddCustomerNoteCommand, NoteDto } from '@/services';
+import {
+  CustomerClient, CustomerDto, AddCustomerCommand, UpdateCustomerCommand, AddCustomerNoteCommand, NoteDto,
+} from '@/services';
 import { createClient } from 'http';
 
 Vue.use(Vuex);
@@ -18,7 +20,8 @@ export default new Vuex.Store({
       });
     },
     SET_NOTES(state, payload) {
-      state.notes = state.notes.filter(n => n.customerId !== payload.customerId);
+      const notes: any[] = state.notes;
+      state.notes = notes.filter((n) => n.customerId !== payload.customerId);
       state.notes.push({customerId: payload.customerId, notes: payload.notes});
     },
   },

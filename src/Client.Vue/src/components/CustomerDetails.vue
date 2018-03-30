@@ -33,10 +33,12 @@ import Guid from '@/Guid';
 @Component({
   computed: {
     customer(): CustomerDto {
-        return this.$store.state.customers.find(c => c.id === this.$route.params.id);
+        const customers: any[] = this.$store.state.customers;
+        return customers.find((c) => c.id === this.$route.params.id);
     },
     notes() {
-        const customerNotes = this.$store.state.notes.find(c => c.customerId === this.$route.params.id);
+        const allCustomersNotes: any[] = this.$store.state.notes;
+        const customerNotes = allCustomersNotes.find((c) => c.customerId === this.$route.params.id);
         if (!customerNotes) {
             return [];
         }
@@ -65,15 +67,16 @@ export default class CustomerDetails extends Vue {
     }
 
     public save() {
+        const me: any = this;
         const command =
-            new UpdateCustomerCommand({ id: this.customer.id, name: this.customer.name, status: this.customer.status });
+            new UpdateCustomerCommand({ id: me.customer.id, name: me.customer.name, status: me.customer.status });
         this.$store.dispatch('saveCustomer', command);
     }
 
     public addNote() {
         const note = prompt('Please add note for customer:');
         if (note !== null) {
-            const command = 
+            const command =
                 new AddCustomerNoteCommand({ customerId: this.$route.params.id, id: Guid.newGuid(), text: note});
             this.$store.dispatch('addNote', command);
         }
