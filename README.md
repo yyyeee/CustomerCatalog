@@ -19,7 +19,7 @@ yyyeee
 * Install @vue/cli: _npm install -g @vue/cli-service-global_
 * Install Dotnet Core SDK 2.1 (e.g. using choco _choco install dotnetcore-sdk --pre_)
 
-#GO TO PRODUCTION:
+# GO TO PRODUCTION:
 * Prepare client application
 ** Go to _src\Client.Vue_
 ** Run _npm start build_
@@ -29,7 +29,7 @@ yyyeee
 ** Use _dotnet publish_ command
 ** Or open VS with project Web.csproj and use publish
 
-#DEVELOPMENT:
+# DEVELOPMENT:
 
 ## RUN SERVER:
 * Go to _src\Web_
