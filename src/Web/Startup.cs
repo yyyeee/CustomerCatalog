@@ -50,6 +50,7 @@ namespace yyyeee.CustomerCatalog
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>

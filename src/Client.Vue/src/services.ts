@@ -13,7 +13,7 @@ export class CustomerClient {
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
         this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl ? baseUrl : "http://localhost:2321";
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
 
     getAll(): Promise<CustomerDto[] | null> {
