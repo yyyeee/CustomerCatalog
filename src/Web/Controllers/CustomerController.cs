@@ -26,12 +26,6 @@ namespace yyyeee.CustomerCatalog.Controllers
         {
             return _customerProvider.GetAll();
         }
-        
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         [HttpPost]
         [ProducesResponseType(201)]

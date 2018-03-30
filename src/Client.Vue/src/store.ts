@@ -12,17 +12,14 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_CUSTOMERS(state, payload: CustomerDto[]) {
+      state.customers.length = 0;
       payload.forEach((element) => {
         state.customers.push(element);
       });
-    },
-    ADD_CUSTOMER(state, payload) {
-      state.customers.unshift(payload);
     }
   },
   actions: {
     getCustomers({ commit }) {
-      // TODO introduce Config
       const customerClient = new CustomerClient();
       customerClient.getAll()
         .then((data) => {
@@ -31,12 +28,10 @@ export default new Vuex.Store({
         .catch((e) => alert('An error occured during retrieving customer, please try again.'));
     },
 
-    addCustomer({ commit }, data) {
-      // TODO introduce Config
+    addCustomer({ dispatch, commit }, data) {
       const customerClient = new CustomerClient();
       customerClient.post(data)
-      // TODO load data
-        .then((response) => commit('ADD_CUSTOMER', data))
+        .then((response) => dispatch('getCustomers'))
         .catch((e) => {
           if (e.status === 409) {
             alert('Customer already exists!');
@@ -45,5 +40,10 @@ export default new Vuex.Store({
           }
         });
     },
+
+    saveCustomer({ dispatch, commit }, data) {
+      const customerClient = new CustomerClient();
+      console.log(data);
+    }
   },
 });
