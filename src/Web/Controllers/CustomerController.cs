@@ -11,20 +11,31 @@ namespace yyyeee.CustomerCatalog.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerProvider _customerProvider;
+        // Command bus to add
         private readonly ICommandHandler<AddCustomerCommand> _addCustomerCommandHandler;
+        private readonly ICommandHandler<UpdateCustomerCommand> _updateCustomerCommandHandler;
 
         public CustomerController(
             ICustomerProvider customerProvider,
-            ICommandHandler<AddCustomerCommand> addCustomerCommandHandler)
+            ICommandHandler<AddCustomerCommand> addCustomerCommandHandler, 
+            ICommandHandler<UpdateCustomerCommand> updateCustomerCommandHandler)
         {
             _customerProvider = customerProvider;
             _addCustomerCommandHandler = addCustomerCommandHandler;
+            _updateCustomerCommandHandler = updateCustomerCommandHandler;
         }
 
         [HttpGet]
         public IEnumerable<CustomerDto> GetAll()
         {
             return _customerProvider.GetAll();
+        }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] UpdateCustomerCommand command)
+        {
+            _updateCustomerCommandHandler.Handle(command);
+            return Ok();
         }
 
         [HttpPost]

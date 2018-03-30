@@ -38,6 +38,7 @@ namespace yyyeee.CustomerCatalog
             services.AddTransient<ICustomerProvider, CustomerProvider>();
             services.AddSingleton<LiteDatabaseFactory>();
             services.AddTransient<ICommandHandler<AddCustomerCommand>, AddCustomerCommandHandler>();
+            services.AddTransient<ICommandHandler<UpdateCustomerCommand>, UpdateCustomerCommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
