@@ -1,15 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { CustomerClient, CustomerDto, AddCustomerCommand, UpdateCustomerCommand } from '@/services';
+import { CustomerClient, CustomerDto, AddCustomerCommand, UpdateCustomerCommand, AddCustomerNoteCommand, NoteDto } from '@/services';
 import { createClient } from 'http';
-import Guid from '@/Guid';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     customers: new Array<CustomerDto>(),
-    customerDetails: new Array<CustomerDto>(),
+    notes: new Map<string, NoteDto[]>(),
   },
   mutations: {
     SET_CUSTOMERS(state, payload: CustomerDto[]) {
@@ -17,7 +16,10 @@ export default new Vuex.Store({
       payload.forEach((element) => {
         state.customers.push(element);
       });
-    }
+    },
+    SET_NOTES(state, payload) {
+      state.notes.set(payload.customerId, payload.notes);
+    },
   },
   actions: {
     getCustomers({ commit }) {
@@ -29,15 +31,15 @@ export default new Vuex.Store({
         .catch((e) => alert('An error occured during retrieving customer, please try again.'));
     },
 
-    addCustomer({ dispatch, commit }, name) {
+    addCustomer({ dispatch, commit }, payload: AddCustomerCommand) {
       const customerClient = new CustomerClient();
-      customerClient.post(new AddCustomerCommand({ id: Guid.newGuid(), name}))
+      customerClient.post(payload)
         .then((response) => dispatch('getCustomers'))
         .catch((e) => {
           if (e.status === 409) {
             alert('Customer already exists!');
           } else {
-            alert('An error occured during retrieving customer, please try again.');
+            alert('An error occured during adding customer, please try again.');
           }
         });
     },
@@ -48,7 +50,25 @@ export default new Vuex.Store({
       customerClient.put(payload)
         .then((response) => alert('Saved!'))
         .catch((e) => {
-          alert('An error occured during retrieving customer, please try again.');
+          alert('An error occured during updating customer, please try again.');
+        });
+    },
+
+    getNotes({ dispatch, commit }, customerId: string) {
+      const customerClient = new CustomerClient();
+      customerClient.getNotes(customerId)
+        .then((data) => commit('SET_NOTES', { customerId, notes: data}))
+        .catch((e) => {
+          alert('An error occured during adding not for customer, please try again.');
+        });
+    },
+
+    addNote({ dispatch, commit }, payload: AddCustomerNoteCommand) {
+      const customerClient = new CustomerClient();
+      customerClient.addNote(payload)
+        .then((response) => dispatch('getNotes', payload.customerId))
+        .catch((e) => {
+          alert('An error occured during adding not for customer, please try again.');
         });
     },
   },

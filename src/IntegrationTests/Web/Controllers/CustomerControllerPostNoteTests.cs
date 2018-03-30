@@ -42,7 +42,7 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web.Controllers
             };
 
             // Act
-            var actual = await InvokePost($"api/customer/note/{customerId}", command);
+            var actual = await InvokePost($"api/customer/note", command);
 
             // Assert
             actual.StatusCode.Should().Be(HttpStatusCode.Created);

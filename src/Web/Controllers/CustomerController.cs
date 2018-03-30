@@ -41,7 +41,8 @@ namespace yyyeee.CustomerCatalog.Controllers
             return _customerProvider.GetNotesForCustomer(id);
         }
 
-        [HttpPost("note/{id}")]
+        [HttpPost("note")]
+        [ProducesResponseType(201)]
         public IActionResult AddNote([FromBody] AddCustomerNoteCommand command)
         {
             // TODO handle duplicates

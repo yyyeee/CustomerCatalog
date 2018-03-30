@@ -167,7 +167,7 @@ export class CustomerClient {
         return Promise.resolve<NoteDto[] | null>(<any>null);
     }
 
-    addNote(command: AddCustomerNoteCommand | null): Promise<FileResponse | null> {
+    addNote(command: AddCustomerNoteCommand | null): Promise<void> {
         let url_ = this.baseUrl + "/api/Customer/note";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -178,7 +178,6 @@ export class CustomerClient {
             method: "POST",
             headers: new Headers({
                 "Content-Type": "application/json", 
-                "Accept": "application/json"
             })
         };
 
@@ -187,20 +186,19 @@ export class CustomerClient {
         });
     }
 
-    protected processAddNote(response: Response): Promise<FileResponse | null> {
+    protected processAddNote(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v, k) => _headers[k] = v); };
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 201) {
+            return response.text().then((_responseText) => {
+            return;
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 }
 

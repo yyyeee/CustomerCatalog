@@ -21,8 +21,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { CustomerDto, UpdateCustomerCommand } from '@/services';
+import { CustomerDto, UpdateCustomerCommand, AddCustomerNoteCommand } from '@/services';
 import { mapState } from 'vuex';
+import Guid from '@/Guid';
 
 @Component({
   computed: {
@@ -49,7 +50,9 @@ export default class CustomerDetails extends Vue {
     public addNote() {
         const note = prompt('Please add note for customer:');
         if (note !== null) {
-            console.log(note);
+            const command = 
+                new AddCustomerNoteCommand({ customerId: this.$route.params.id, id: Guid.newGuid(), text: note});
+            this.$store.dispatch('addNote', command);
         }
     }
 }
