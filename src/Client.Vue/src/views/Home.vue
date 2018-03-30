@@ -9,7 +9,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import CustomerList from '@/components/CustomerList.vue';
 import { CustomerDto } from '@/services';
-import Guid from '@/Guid';
 
 @Component({
   components: {
@@ -24,7 +23,7 @@ export default class Home extends Vue {
   }
 
   public addCustomer() {
-    this.$store.dispatch('addCustomer', { id: Guid.newGuid(), name: 'New customer...'})
+    this.$store.dispatch('addCustomer', 'New customer...');
   }
 }
 </script>

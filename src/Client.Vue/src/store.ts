@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { CustomerClient, CustomerDto } from '@/services'
+import { CustomerClient, CustomerDto, AddCustomerCommand, UpdateCustomerCommand } from '@/services';
 import { createClient } from 'http';
+import Guid from '@/Guid';
 
 Vue.use(Vuex);
 
@@ -28,9 +29,9 @@ export default new Vuex.Store({
         .catch((e) => alert('An error occured during retrieving customer, please try again.'));
     },
 
-    addCustomer({ dispatch, commit }, data) {
+    addCustomer({ dispatch, commit }, name) {
       const customerClient = new CustomerClient();
-      customerClient.post(data)
+      customerClient.post(new AddCustomerCommand({ id: Guid.newGuid(), name}))
         .then((response) => dispatch('getCustomers'))
         .catch((e) => {
           if (e.status === 409) {
@@ -41,9 +42,14 @@ export default new Vuex.Store({
         });
     },
 
-    saveCustomer({ dispatch, commit }, data) {
+    saveCustomer({ dispatch, commit }, payload: UpdateCustomerCommand) {
       const customerClient = new CustomerClient();
-      console.log(data);
-    }
+
+      customerClient.put(payload)
+        .then((response) => alert('Saved!'))
+        .catch((e) => {
+          alert('An error occured during retrieving customer, please try again.');
+        });
+    },
   },
 });

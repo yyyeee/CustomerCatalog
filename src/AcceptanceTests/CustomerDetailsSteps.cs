@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using System.Threading;
+using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
+using Xunit;
 using yyyeee.CustomerCatalog.AcceptanceTests.Pages;
 
 namespace yyyeee.CustomerCatalog.AcceptanceTests
@@ -22,7 +24,9 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests
         [When(@"I open customer '(.*)' view")]
         public void WhenIOpenCustomerView(string customerId)
         {
-            Driver.Url = ($"{ConfigurationProvider.ApplicationAddress}/#/customer/{customerId}");
+            Driver.Navigate().GoToUrl($"{ConfigurationProvider.ApplicationAddress}/#/customer/{customerId}");
+            Driver.Navigate().Refresh();
+            Assert.NotNull(CustomerDetailsPage);
         }
         
         [When(@"I change name to '(.*)'")]
@@ -41,6 +45,7 @@ namespace yyyeee.CustomerCatalog.AcceptanceTests
         public void WhenIClickSave()
         {
             CustomerDetailsPage.ClickSave();
+            Driver.SwitchTo().Alert().Accept();
         }
         
         [When(@"I open customers list")]

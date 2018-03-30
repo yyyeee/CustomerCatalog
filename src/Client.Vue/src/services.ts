@@ -13,7 +13,7 @@ export class CustomerClient {
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
         this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl ? baseUrl : "";
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:2321";
     }
 
     getAll(): Promise<CustomerDto[] | null> {
@@ -55,6 +55,42 @@ export class CustomerClient {
         return Promise.resolve<CustomerDto[] | null>(<any>null);
     }
 
+    put(command: UpdateCustomerCommand | null): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Customer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "PUT",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPut(_response);
+        });
+    }
+
+    protected processPut(response: Response): Promise<FileResponse | null> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v, k) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse | null>(<any>null);
+    }
+
     post(command: AddCustomerCommand | null): Promise<void> {
         let url_ = this.baseUrl + "/api/Customer";
         url_ = url_.replace(/[?&]$/, "");
@@ -89,8 +125,8 @@ export class CustomerClient {
         return Promise.resolve<void>(<any>null);
     }
 
-    get(id: number): Promise<string | null> {
-        let url_ = this.baseUrl + "/api/Customer/{id}";
+    getNotes(id: string): Promise<NoteDto[] | null> {
+        let url_ = this.baseUrl + "/api/Customer/note/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
@@ -105,18 +141,22 @@ export class CustomerClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGet(_response);
+            return this.processGetNotes(_response);
         });
     }
 
-    protected processGet(response: Response): Promise<string | null> {
+    protected processGetNotes(response: Response): Promise<NoteDto[] | null> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v, k) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(NoteDto.fromJS(item));
+            }
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -124,7 +164,43 @@ export class CustomerClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<string | null>(<any>null);
+        return Promise.resolve<NoteDto[] | null>(<any>null);
+    }
+
+    addNote(command: AddCustomerNoteCommand | null): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Customer/note";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAddNote(_response);
+        });
+    }
+
+    protected processAddNote(response: Response): Promise<FileResponse | null> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v, k) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse | null>(<any>null);
     }
 }
 
@@ -182,6 +258,134 @@ export enum CustomerStatus {
     NonActive = 3, 
 }
 
+export class NoteDto implements INoteDto {
+    id!: string;
+    text?: string | undefined;
+
+    constructor(data?: INoteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.text = data["text"];
+        }
+    }
+
+    static fromJS(data: any): NoteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NoteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["text"] = this.text;
+        return data; 
+    }
+}
+
+export interface INoteDto {
+    id: string;
+    text?: string | undefined;
+}
+
+export class AddCustomerNoteCommand implements IAddCustomerNoteCommand {
+    customerId!: string;
+    id!: string;
+    text?: string | undefined;
+
+    constructor(data?: IAddCustomerNoteCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.customerId = data["customerId"];
+            this.id = data["id"];
+            this.text = data["text"];
+        }
+    }
+
+    static fromJS(data: any): AddCustomerNoteCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddCustomerNoteCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["customerId"] = this.customerId;
+        data["id"] = this.id;
+        data["text"] = this.text;
+        return data; 
+    }
+}
+
+export interface IAddCustomerNoteCommand {
+    customerId: string;
+    id: string;
+    text?: string | undefined;
+}
+
+export class UpdateCustomerCommand implements IUpdateCustomerCommand {
+    id!: string;
+    name?: string | undefined;
+    status!: CustomerStatus;
+
+    constructor(data?: IUpdateCustomerCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.status = data["status"];
+        }
+    }
+
+    static fromJS(data: any): UpdateCustomerCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateCustomerCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["status"] = this.status;
+        return data; 
+    }
+}
+
+export interface IUpdateCustomerCommand {
+    id: string;
+    name?: string | undefined;
+    status: CustomerStatus;
+}
+
 export class AddCustomerCommand implements IAddCustomerCommand {
     id!: string;
     name?: string | undefined;
@@ -220,6 +424,13 @@ export class AddCustomerCommand implements IAddCustomerCommand {
 export interface IAddCustomerCommand {
     id: string;
     name?: string | undefined;
+}
+
+export interface FileResponse {
+    data: Blob;
+    status: number;
+    fileName?: string;
+    headers?: { [name: string]: any };
 }
 
 export class SwaggerException extends Error {

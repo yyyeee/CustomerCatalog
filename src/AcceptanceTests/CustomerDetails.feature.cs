@@ -112,7 +112,7 @@ this.ScenarioSetup(scenarioInfo);
                         "CreationTime"});
             table2.AddRow(new string[] {
                         "New name",
-                        "Prospective",
+                        "Current",
                         "Mar 27th 18"});
 #line 16
  testRunner.Then("the following customers appear in the list", ((string)(null)), table2, "Then ");

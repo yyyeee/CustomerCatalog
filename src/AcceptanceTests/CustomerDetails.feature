@@ -15,7 +15,7 @@ Scenario: Edit customer details
 	When I open customers list
 	Then the following customers appear in the list
 | Name           | Status     | CreationTime |
-| New name      | Prospective | Mar 27th 18       |
+| New name      | Current | Mar 27th 18       |
 	
 @customerDetails
 Scenario: See customer details

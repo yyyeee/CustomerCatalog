@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { CustomerDto } from '@/services';
+import { CustomerDto, UpdateCustomerCommand } from '@/services';
 import { mapState } from 'vuex';
 
 @Component({
@@ -33,15 +33,16 @@ import { mapState } from 'vuex';
   data() {
     return {
       statuses: [
-      { text: 'Prospective', value: '1' },
-      { text: 'Current', value: '2' },
-      { text: 'Non-active', value: '3' },
+      { text: 'Prospective', value: 1 },
+      { text: 'Current', value: 2 },
+      { text: 'Non-active', value: 3 },
     ]};
   },
 })
 export default class CustomerDetails extends Vue {
     public save() {
-        const command = { id: this.customer.id  };
+        const command =
+            new UpdateCustomerCommand({ id: this.customer.id, name: this.customer.name, status: this.customer.status });
         this.$store.dispatch('saveCustomer', command);
     }
 
