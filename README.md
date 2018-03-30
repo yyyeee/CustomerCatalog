@@ -21,13 +21,13 @@ yyyeee
 
 # GO TO PRODUCTION:
 * Prepare client application
-** Go to _src\Client.Vue_
-** Run _npm start build_
-** Copy _src\Client.Vue\dist_ to server
+* * Go to _src\Client.Vue_
+* * Run _npm start build_
+* * Copy _src\Client.Vue\dist_ to server
 * Prepare server application
-** Go to _src\Web_
-** Use _dotnet publish_ command
-** Or open VS with project Web.csproj and use publish
+* * Go to _src\Web_
+* * Use _dotnet publish_ command
+* * Or open VS with project Web.csproj and use publish
 
 # DEVELOPMENT:
 
