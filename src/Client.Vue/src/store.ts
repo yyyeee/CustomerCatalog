@@ -23,7 +23,7 @@ export default new Vuex.Store({
   actions: {
     getCustomers({ commit }) {
       // TODO introduce Config
-      const customerClient = new CustomerClient('http://localhost:2321');
+      const customerClient = new CustomerClient();
       customerClient.getAll()
         .then((data) => {
           commit('SET_CUSTOMERS', data);
@@ -33,7 +33,7 @@ export default new Vuex.Store({
 
     addCustomer({ commit }, data) {
       // TODO introduce Config
-      const customerClient = new CustomerClient('http://localhost:2321');
+      const customerClient = new CustomerClient();
       customerClient.post(data)
       // TODO load data
         .then((response) => commit('ADD_CUSTOMER', data))
