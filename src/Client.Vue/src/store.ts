@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     customers: new Array<CustomerDto>(),
-    notes: new Map<string, NoteDto[]>(),
+    notes: new Array<object>(),
   },
   mutations: {
     SET_CUSTOMERS(state, payload: CustomerDto[]) {
@@ -18,7 +18,8 @@ export default new Vuex.Store({
       });
     },
     SET_NOTES(state, payload) {
-      state.notes.set(payload.customerId, payload.notes);
+      state.notes = state.notes.filter(n => n.customerId !== payload.customerId);
+      state.notes.push({customerId: payload.customerId, notes: payload.notes});
     },
   },
   actions: {
