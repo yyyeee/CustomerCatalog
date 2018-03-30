@@ -19,7 +19,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { CustomerDto } from '@/services';
 
 @Component
-export default class HelloWorld extends Vue {
+export default class CustomerList extends Vue {
   @Prop() private items: CustomerDto[];
 
   private columns = [

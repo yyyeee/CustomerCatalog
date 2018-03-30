@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    customers: new Array<CustomerDto>()
+    customers: new Array<CustomerDto>(),
+    customerDetails: new Array<CustomerDto>(),
   },
   mutations: {
     SET_CUSTOMERS(state, payload: CustomerDto[]) {

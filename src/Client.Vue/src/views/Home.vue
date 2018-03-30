@@ -17,16 +17,14 @@ import Guid from '@/Guid';
   },
 })
 export default class Home extends Vue {
-  
-  mounted () {
-    this.items = this.$store.state.customers;
-    this.$store.dispatch("getCustomers");
-  }
-
-  addCustomer() {
-    this.$store.dispatch("addCustomer", { id: Guid.newGuid(), name: 'New customer...'})
-  }
-
   private items: CustomerDto[] = [];
+
+  public mounted() {
+    this.items = this.$store.state.customers;
+  }
+
+  public addCustomer() {
+    this.$store.dispatch('addCustomer', { id: Guid.newGuid(), name: 'New customer...'})
+  }
 }
 </script>
