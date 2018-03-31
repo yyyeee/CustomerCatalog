@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,20 @@ namespace yyyeee.CustomerCatalog.IntegrationTests.Web
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.Development.json", true)
                 .Build();
+            var uniqueConnectionString = $"{config.GetConnectionString("CustomerDatabase")}.{Guid.NewGuid()}";
+            var uniqueConfig = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddInMemoryCollection(new[]
+                    {new KeyValuePair<string, string>("ConnectionStrings:CustomerDatabase", uniqueConnectionString)})
+                .Build();
+
             _server = new TestServer(
                 new WebHostBuilder()
-                    .UseConfiguration(config)
+                    .UseConfiguration(uniqueConfig)
                     .UseStartup<Startup>());
             Client = _server.CreateClient();
-            Context = new CustomerContext(config);
+            Context = new CustomerContext(uniqueConfig);
         }
         
         public void Dispose()
